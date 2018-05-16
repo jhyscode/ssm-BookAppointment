@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imooc.appoint.dao.BookDao">
+	<select id="queryById" parameterType="long" resultType="com.imooc.appoint.entiy.Book" >
+		<!-- 具体的sql -->
+		SELECT
+			book_id,
+			name,
+			introd,
+			number
+		FROM
+			book
+		WHERE
+			book_id = #{bookId}
+	</select>
+
+	<select id="querySome" parameterType="com.imooc.appoint.entiy.Book" resultType="com.imooc.appoint.entiy.Book">
+		SELECT book_id,name,introd,number FROM book
+		<where>
+			<!-- <if test="name !=null and !&quot;&quot;.equals(name.trim())">  -->
+				and name like '%' #{name} '%'
+			<!--  </if>   -->
+		</where> 
+	</select> 
+		
+	<select id="queryAll" resultType="com.imooc.appoint.entiy.Book">
+		SELECT
+			book_id,
+			name,
+			introd,
+			number
+		FROM
+			book
+		ORDER BY
+			book_id
+		LIMIT #{offset}, #{limit}
+	</select>
+	
+	<update id="reduceNumber">
+		UPDATE book
+		SET number = number - 1
+		WHERE
+			book_id = #{bookId}
+		AND number > 0
+	</update>
+
+</mapper>

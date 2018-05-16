@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="com.imooc.appoint.dao.AppointmentDao">
+    <insert id="insertAppointment">
+		<!-- ignore 主键冲突，报错 -->
+		INSERT ignore INTO appointment (book_id, student_id)
+		VALUES (#{bookId}, #{studentId})
+	</insert>
+<!--     <delete id="deleteOne" >
+    	DELETE FROM appointment WHERE book_id=#{bookId} AND student_id=#{studentId} 
+    </delete>  用不到这个功能-->
+    <!-- //查询某个学生的所有预约记录 -->
+    <select id="quaryAndReturn"  resultType="com.imooc.appoint.entiy.Appointment">
+		<!-- 如何告诉MyBatis把结果映射到Appointment同时映射book属性 -->
+		<!-- 可以自由控制SQL -->
+		SELECT
+			a.book_id,<!--mybatis会认为是book_id,又因为开启了驼峰命名法 所以最终是bookId -->
+			a.student_id,
+			a.appoint_time,
+			b.book_id "book.book_id",<!--b.book_id as "book.book_id" 告诉mybatis b.book_id是Appointment中book属性的值-->
+			b.`name` "book.name",
+			b.introd "book.introd",
+			b.number "book.number"
+		FROM
+			appointment a
+		INNER JOIN book b ON a.book_id = b.book_id
+		WHERE 
+		 	a.student_id = #{studentId}
+	</select>
+<!-- 	//查询所有被预约了的书
+	<select id="queryAll" >
+		SELECT 
+			a.book_id, 
+			a.student_id,
+			a.appoint_time, 
+			b.book_id "book.book_id", 
+			b.`name` "book.name",
+			b.introd "book.introd"
+			b.number "book.number"
+		FROM 
+			appointment a
+		INNER JOIN book b ON a.book_id = b.book_id	
+		ORDER BY
+			a.book_id
+		LIMIT #{offset}, #{limit}
+	</select> 暂时用不到这个功能，管理员界面待开发-->
+	
+</mapper>
