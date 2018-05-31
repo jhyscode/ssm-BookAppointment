@@ -1,5 +1,5 @@
 # ssm-BookAppointment<br>
-优雅整合SSM框架：SpringMVC + Spring + MyBatis（用户登陆式图书预约系统）<br>
+优雅整合SSM框架：SpringMVC + Spring + MyBatis（图书预约系统）<br>
 小伙伴们开车了！<br>
  话不多说先让我们看看此项目运行起来的效果，方便大家有个直观了解，好在事先估计要用到那些技术，方便大家有针对性的学习。<br>
 看图！<br>
